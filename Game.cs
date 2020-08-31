@@ -22,7 +22,8 @@ namespace HelloWorld
         //Performed once when the game begins
         public void Start()
         {
-            Console.SetWindowSize(100, 30);
+            Console.SetWindowSize(100, 50);
+            
         }
 
         //Repeated until the game ends
@@ -38,8 +39,11 @@ namespace HelloWorld
             }
             else if (_gameState == "Game")
             {
+                Console.Clear();
                 Console.WriteLine("Long exposition about " + _player.name + " the " + _player.combatClass + " in which their many triumphs and shortcomings are described in gory detail...");
                 Console.WriteLine("Describe the setting, giving specific detail to the most irrelevant parts of the scene...");
+                Console.WriteLine();
+                OldManEncounter();
 
             }
         }
@@ -131,6 +135,7 @@ namespace HelloWorld
             PressAnyKeyToContinue();
         }
 
+        #region HELPERS
         // Auto loops for correct input
         public string GetStringInput(string[] validInputs)
         {
@@ -149,10 +154,39 @@ namespace HelloWorld
             }
         }
 
+        // Self explanatory
         public void PressAnyKeyToContinue()
         {
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+        }
+        #endregion
+
+        void OldManEncounter()
+        {
+            Console.WriteLine("An old man steps out of the shadows before you and bars your path.");
+            Console.WriteLine();
+            Console.WriteLine("Old Man: \"Greetings, traveler!\" he says in a shrill voice, \"Whereabouts is the bathroom?\"");
+            Console.WriteLine(" [1] \"Back in the trees old man.\"");
+            Console.WriteLine(" [2] \"Fight be because this is a video game and logic is irrelevant.\"");
+            Console.Write(">");
+            string[] validInputs = { "1", "2" };
+            string input = GetStringInput(validInputs);
+            if (input == "1")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Old Man: \"Ah yes! Thank you young'n. My eyes aren't what they used t'be ye know.");
+                Console.WriteLine();
+                PressAnyKeyToContinue();
+            }
+            else if (input == "2")
+            {
+                // Fight
+                Console.WriteLine("Fight");
+                PressAnyKeyToContinue();
+                _gameState = "Main Menu";
+                return;
+            }
         }
     }
 }
