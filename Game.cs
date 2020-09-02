@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 
 namespace HelloWorld
 {
@@ -182,11 +183,51 @@ namespace HelloWorld
             else if (input == "2")
             {
                 // Fight
-                Console.WriteLine("Fight");
+                Console.WriteLine("It's a Fight!");
                 PressAnyKeyToContinue();
-                _gameState = "Main Menu";
-                return;
+                Player enemy = new Player(100, 100, 10, 1, "Gindulf", "Wizard");
+                _endGame = DoBattle(ref _player, ref enemy);
             }
+        }
+    
+        bool DoBattle(ref Player player, ref Player enemy)
+        {
+            while (player.health > 0 && enemy.health > 0)
+            {
+                Console.Clear();
+                player.PrintStats();
+                Console.WriteLine();
+                enemy.PrintStats();
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine(" [1] Attack!");
+                Console.WriteLine(" [2] Defend!");
+                Console.Write(">");
+                string[] battleOptions = { "1", "2" };
+                string input = GetStringInput(battleOptions);
+
+                // Do player turn
+                if (input == "1")
+                {
+                    Console.WriteLine("You attack " + enemy.name + " and deal " + player.damage + " damage!");
+                    enemy.health -= player.damage;
+                    PressAnyKeyToContinue();
+                }
+                else if (input == "2")
+                {
+                    Console.WriteLine("You defend yourself from all damage!");
+                    PressAnyKeyToContinue();
+                    Console.WriteLine();
+                    continue;
+                }
+
+                // Do enemy attack
+                Console.WriteLine(enemy.name + " attacks you and deals " + enemy.damage + " damage!");
+                player.health -= enemy.damage;
+                PressAnyKeyToContinue();
+                Console.WriteLine();
+            }
+            return player.health > 0;
         }
     }
 }
